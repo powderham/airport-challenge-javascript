@@ -57,32 +57,20 @@ describe('Airport', function() {
 
   describe('Weather', function() {
     it('will not allow a plane to land during stormy weather', function() {
+
       airport = new Airport();
       plane1 = new Plane();
-      weather = new Weather();
-      // spyOn(airport, stormyWeather()).andReturn(true)
-      spyOn(weather, function() {weather.isStormy()}).andReturn(true)
-      console.log(airport.weather.stormyWeather)
+
+      spyOn(airport.weather, 'isStormy').and.returnValue(true)
+
+
       expect( function() {airport.landPlane(plane1); } ).toThrow('Cannot land during stormy weather');
     });
   });
 });
 
-// describe Airport do
-//
-//   before(:each) do
-//     @airport = Airport.new
-//     #Forcing the method stormy to return false with allow
-//     allow(@airport).to receive_messages(:stormy? => false)
-//     @plane = Plane.new
-//   end
-//
-//   describe "Weather tests" do
-//     it "Should not allow landing during bad weather" do
-//       #Forcing :stormy to return true
-//       allow(@airport).to receive_messages(:stormy? => true)
-//       expect{@airport.land_plane(@plane)}.to raise_error("Cannot land due to bad weather")
-//     end
+
+
 //
 //     it "Should not allow take off during bad weather" do
 //       #Forcing :stormy to return true
