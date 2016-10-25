@@ -57,26 +57,17 @@ describe('Airport', function() {
 
   describe('Weather', function() {
     it('will not allow a plane to land during stormy weather', function() {
-
       airport = new Airport();
       plane1 = new Plane();
-
       spyOn(airport.weather, 'isStormy').and.returnValue(true)
-
-
       expect( function() {airport.landPlane(plane1); } ).toThrow('Cannot land during stormy weather');
+    });
+    it('will not allow a plane to take off during stormy weather', function() {
+      airport = new Airport();
+      plane1 = new Plane();
+      airport.landPlane(plane1);
+      spyOn(airport.weather, 'isStormy').and.returnValue(true)
+      expect( function() {airport.takeOff(plane1); } ).toThrow('Cannot take off during stormy weather');
     });
   });
 });
-
-
-
-//
-//     it "Should not allow take off during bad weather" do
-//       #Forcing :stormy to return true
-//       allow(@airport).to receive_messages(:stormy? => true)
-//       expect{@airport.take_off(@plane)}.to raise_error('Cannot take off due to bad weather')
-//     end
-//
-//   end
-// end

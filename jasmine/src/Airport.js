@@ -17,10 +17,6 @@ Airport.prototype.landPlane = function (plane) {
   this.terminal.push(plane);
 };
 
-// Airport.prototype.setStormyWeather = function (bool) {
-//   this.stormyWeather = bool
-// };
-
 Airport.prototype.isStormyWeather = function () {
   this.weather.isStormy
 };
@@ -28,6 +24,9 @@ Airport.prototype.isStormyWeather = function () {
 Airport.prototype.takeOff = function (plane) {
   if (!this.terminal.includes(plane)) {
     throw 'Plane not in airport'
+  };
+  if (this.weather.isStormy() === true) {
+      throw 'Cannot take off during stormy weather'
   };
   this.terminal.pop(plane);
 };
