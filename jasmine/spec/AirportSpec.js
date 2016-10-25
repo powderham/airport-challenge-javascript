@@ -23,11 +23,33 @@ describe('Airport', function() {
       airport.takeOff(plane);
       expect(airport.terminal).not.toContain(plane);
     });
+
+    it('cannot take off if it\'s not landed', function() {
+      airport = new Airport();
+      plane = new Plane();
+      airport.landPlane(plane);
+      airport.takeOff(plane);
+      expect(airport.terminal).not.toContain(plane);
+      expect( function() {airport.takeOff(plane); } ).toThrow('Plane not in airport')
+    });
   });
 
-  
-});
+  describe('Capacity', function() {
+    it('should not allow a plane to land if full', function () {
+      airport = new Airport();
+      for(i=1; i<21; i++) {airport.landPlane(new Plane())}
+      plane1 = new Plane();
+      expect( function() {airport.landPlane(plane1); } ).toThrow('Airport is full');
+    });
 
+    it('has a defualt capacity of 20', function () {
+      airport = new Airport();
+      expect(airport.CAPACITY).toBe(20);
+    });
+  });
+
+
+});
 
 // describe Airport do
 //
@@ -47,10 +69,6 @@ describe('Airport', function() {
 //     end
 //   end
 //
-//   describe "Take off tests" do
-//     it "Planes should not be able to take off if they are not in the airport" do
-//       expect{@airport.take_off(@plane)}.to raise_error('Plane is not in the airport')
-//     end
 //
 //     it "Remove plane should remove plane" do
 //       @airport.land_plane(@plane)
@@ -78,25 +96,5 @@ describe('Airport', function() {
 //       expect{@airport.take_off(@plane)}.to raise_error('Cannot take off due to bad weather')
 //     end
 //
-//   end
-//
-//   describe "Capacity tests" do
-//     it "Airport should have a default capacity" do
-//       expect(@airport).to have_attributes(:capacity => 10)
-//     end
-//
-//     it "Airport should have a definable capacity" do
-//       capacity_airport = Airport.new(15)
-//       expect(capacity_airport).to have_attributes(:capacity => 15)
-//     end
-//
-//     it "Planes should not be able to land if capacity is full" do
-//       10.times do @airport.land_plane(Plane.new) end
-//       expect{@airport.land_plane(@plane)}.to raise_error('Cannot land due to no capacity')
-//     end
-//
-//     it "Airport should stand up to rush hour" do
-//       expect{10.times do @airport.land_plane(Plane.new) end}.not_to raise_error
-//     end
 //   end
 // end
