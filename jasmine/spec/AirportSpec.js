@@ -7,11 +7,18 @@ describe('Airport', function() {
 
   describe('Landing tests', function() {
 
-    it('Should allow a plane to land', function() {
+    it('should allow a plane to land', function() {
       airport = new Airport();
       plane = new Plane();
       airport.landPlane(plane);
       expect(airport.terminal).toContain(plane)
+    });
+
+    it('should not allow a plane to land that is already in the airport', function() {
+      airport = new Airport();
+      plane = new Plane();
+      airport.landPlane(plane);
+      expect( function() {airport.landPlane(plane); } ).toThrow('Plane is already in the airport')
     });
   });
 
@@ -48,7 +55,17 @@ describe('Airport', function() {
     });
   });
 
-
+  describe('Weather', function() {
+    it('will not allow a plane to land during stormy weather', function() {
+      airport = new Airport();
+      plane1 = new Plane();
+      weather = new Weather();
+      // spyOn(airport, stormyWeather()).andReturn(true)
+      spyOn(weather, function() {weather.isStormy()}).andReturn(true)
+      console.log(airport.weather.stormyWeather)
+      expect( function() {airport.landPlane(plane1); } ).toThrow('Cannot land during stormy weather');
+    });
+  });
 });
 
 // describe Airport do
@@ -58,29 +75,6 @@ describe('Airport', function() {
 //     #Forcing the method stormy to return false with allow
 //     allow(@airport).to receive_messages(:stormy? => false)
 //     @plane = Plane.new
-//   end
-//
-
-//   describe "Landing tests" do
-
-//     it "Planes should not be able to land twice" do
-//       @airport.land_plane(@plane)
-//       expect{@airport.land_plane(@plane)}.to raise_error('Plane has already landed')
-//     end
-//   end
-//
-//
-//     it "Remove plane should remove plane" do
-//       @airport.land_plane(@plane)
-//       @airport.take_off(@plane)
-//       expect(@airport.planes).to_not include(@plane)
-//     end
-//
-//     it "Update log should update log" do
-//       @airport.land_plane(@plane)
-//       @airport.take_off(@plane)
-//       expect(@airport.show_log).to eq ["Plane #{@plane} landed","Plane #{@plane} took off"]
-//     end
 //   end
 //
 //   describe "Weather tests" do
