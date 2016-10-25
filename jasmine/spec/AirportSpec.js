@@ -10,6 +10,7 @@ describe('Airport', function() {
     it('should allow a plane to land', function() {
       airport = new Airport();
       plane = new Plane();
+      spyOn(airport.weather, 'isStormy').and.returnValue(false)
       airport.landPlane(plane);
       expect(airport.terminal).toContain(plane)
     });
@@ -17,15 +18,19 @@ describe('Airport', function() {
     it('should not allow a plane to land that is already in the airport', function() {
       airport = new Airport();
       plane = new Plane();
+      spyOn(airport.weather, 'isStormy').and.returnValue(false)
       airport.landPlane(plane);
       expect( function() {airport.landPlane(plane); } ).toThrow('Plane is already in the airport')
     });
   });
 
   describe('Taking off tests', function() {
+
+
     it('Should allow a plane to take off', function() {
       airport = new Airport();
       plane = new Plane();
+      spyOn(airport.weather, 'isStormy').and.returnValue(false)
       airport.landPlane(plane);
       airport.takeOff(plane);
       expect(airport.terminal).not.toContain(plane);
@@ -34,6 +39,7 @@ describe('Airport', function() {
     it('cannot take off if it\'s not landed', function() {
       airport = new Airport();
       plane = new Plane();
+      spyOn(airport.weather, 'isStormy').and.returnValue(false)
       airport.landPlane(plane);
       airport.takeOff(plane);
       expect(airport.terminal).not.toContain(plane);
@@ -44,6 +50,7 @@ describe('Airport', function() {
   describe('Capacity', function() {
     it('should not allow a plane to land if full', function () {
       airport = new Airport();
+      spyOn(airport.weather, 'isStormy').and.returnValue(false)
       for(i=1; i<21; i++) {airport.landPlane(new Plane())}
       plane1 = new Plane();
       expect( function() {airport.landPlane(plane1); } ).toThrow('Airport is full');

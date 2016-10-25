@@ -17,10 +17,6 @@ Airport.prototype.landPlane = function (plane) {
   this.terminal.push(plane);
 };
 
-Airport.prototype.isStormyWeather = function () {
-  this.weather.isStormy
-};
-
 Airport.prototype.takeOff = function (plane) {
   if (!this.terminal.includes(plane)) {
     throw 'Plane not in airport'
